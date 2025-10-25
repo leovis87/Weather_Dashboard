@@ -1,0 +1,5 @@
+dotenv
+os
+requests
+streamlit
+openweathermap api
