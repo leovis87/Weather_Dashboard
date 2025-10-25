@@ -5,11 +5,13 @@ from dotenv import load_dotenv
 from api.openweather import get_weather, get_forecast
 
 
-# .env 파일에서 환경 변수를 로드
-load_dotenv()
+# # .env 파일에서 환경 변수를 로드
+# load_dotenv()
 
-# os.getenv() 함수로 환경 변수 값을 가져옴
-API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
+# # os.getenv() 함수로 환경 변수 값을 가져옴
+# API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
+
+API_KEY = st.secrets["OPENWEATHER_API_KEY"]
 
 def main():
     """
