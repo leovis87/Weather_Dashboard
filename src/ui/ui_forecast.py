@@ -40,7 +40,7 @@ def show_current_weather(lat: float,
     # 2. 정상 응답 여부 확인
     cod = str(current.get("cod", "500"))
     if cod != "200":
-        st.error(f"{title} 호출 실패: {current.get("message", "알 수 없는 오류")}")
+        st.error(f"{title} 호출 실패: {current.get('message', '알 수 없는 오류')}")
         return
     
     # 3. 정상일 때만 상세 출력
@@ -52,10 +52,10 @@ def show_current_details(data: dict,
     현재 날씨 상세(강수량/습도/풍속 등) 출력
     """
     st.subheader(title)
-    main = data.det("main", {})
-    wind = data.det("wind", {})
-    rain = data.det("rain", {})
-    snow = data.det("snow", {})
+    main = data.get("main", {})
+    wind = data.get("wind", {})
+    rain = data.get("rain", {})
+    snow = data.get("snow", {})
 
     cols = st.columns(4)
     cols[0].metric("기온(°C)", f"{main.get('temp', '—')}")
