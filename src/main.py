@@ -21,11 +21,12 @@ def main():
     각 기능별 함수들을 불러와
     UI를 표시
     """
+    st.title("🌤️ 날씨 대시보드")
 
     # 1. 현재 위치(IP 기반) 자동 표시
     lat, lon, city_name = get_location_by_ip()
     if lat and lon:
-        show_current_weather(lat, lon, f"📍 현재 위치: {city_name or "알 수 없음"}")
+        show_current_weather(lat, lon, f"📍 현재 위치: {city_name or '알 수 없음'}")
     
     st.divider()
 
@@ -45,10 +46,14 @@ def main():
     
     if go:
         current = get_current_weather_by_coords(lat_input, lon_input, API_KEY)
-        if current.get("cod") == 200:
+
+        if isinstance(current, dict) and str(current.get("cod")) == "200":
             show_current_details(current, "📍 사용자 지정 위치")
-    else:
-        st.error(f"현재 위치 호출 실패: {current.get('message', '알 수 없는 오류')}")
+        else:
+            st.error(
+                f"사용자 지정 위치 호출 실패: "
+                f"{current.get('message', '알 수 없는 오류') if isinstance(current, dict) else 'API 응답 오류'}"
+            )
     
     st.divider()
 
@@ -57,14 +62,19 @@ def main():
     city = st.text_input("도시 이름을 입력하세요:", "서울")
     if st.button("날씨 조회"):
         data = get_forecast(city, API_KEY)
-        if data.get("cod") == "200":
+
+        if isinstance(data, dict) and str(data.get("cod")) == "200":
             try:            
                 daily = process_forecast(data)
                 show_forecast(daily)
             except Exception as e:
                 st.error(f"데이터 가공 오류: {e}")
         else:
-            st.error(f"도시를 찾을 수 없습니다: {data.get('message', '알 수 없는 오류')} ")
+            st.error(
+                f"도시를 찾을 수 없습니다: "
+                f"{data.get('message', '알 수 없는 오류') if isinstance(data, dict) else 'API 응답 오류'}"
+            )
+
  
 if __name__ == "__main__":
     main()
