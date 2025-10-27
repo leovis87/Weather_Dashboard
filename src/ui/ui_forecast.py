@@ -1,5 +1,8 @@
 import pandas as pd
 import streamlit as st
+from api.openweather import get_current_weather_by_coords
+
+API_KEY = st.secrets["OPENWEATHER_API_KEY"]
 
 def show_forecast(daily: pd.DataFrame):
     """
@@ -18,6 +21,30 @@ def show_forecast(daily: pd.DataFrame):
     # date를 index로 설정 -> x축 날짜
     # 최저기온, 최고기온, 평균기온 -> y축
     st.line_chart(daily[["최저기온", "최대기온", "평균기온"]])
+
+def show_current_weather(lat: float,
+                         lon: float,
+                         title: str):
+    """
+    현재 위치 날씨를 안전하게 가져와서 출력
+    """
+    current = get_current_weather_by_coords(lat,
+                                            lon,
+                                            API_KEY)
+    
+    # 1. 응답이 dict인지 확인
+    if not isinstance(current, dict):
+        st.error("API 응답이 올바르지 않습니다.")
+        return
+
+    # 2. 정상 응답 여부 확인
+    cod = str(current.get("cod", "500"))
+    if cod != "200":
+        st.error(f"{title} 호출 실패: {current.get("message", "알 수 없는 오류")}")
+        return
+    
+    # 3. 정상일 때만 상세 출력
+    show_current_details(current, title)
 
 def show_current_details(data: dict,
                          title: str):

@@ -6,7 +6,7 @@ from api.openweather import get_forecast, \
                             get_current_weather_by_coords, \
                             get_location_by_ip
 from utils.util_forecast import process_forecast
-from ui.ui_forecast import show_forecast, show_current_details
+from ui.ui_forecast import show_forecast, show_current_details, show_current_weather
 
 # # .env 파일에서 환경 변수를 로드
 # load_dotenv()
@@ -25,12 +25,7 @@ def main():
     # 1. 현재 위치(IP 기반) 자동 표시
     lat, lon, city_name = get_location_by_ip()
     if lat and lon:
-        current = get_current_weather_by_coords(lat, lon, API_KEY)
-        if current.get("cod") != 200:
-            show_current_details(current,
-                                 f"📍 현재 위치: {city_name or '알 수 없음'}")
-        else:
-            st.warning("현재 위치 날씨를 불러오지 못했습니다.")
+        show_current_weather(lat, lon, f"📍 현재 위치: {city_name or "알 수 없음"}")
     
     st.divider()
 

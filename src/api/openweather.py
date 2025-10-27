@@ -84,8 +84,11 @@ def get_current_weather_by_coords(lat: float,
     경도(longitude): lon
     """
     url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API_KEY}&units=metric&lang=kr"
-    response = requests.get(url, timeout=10)
-    return response.json()
+    try:
+        response = requests.get(url, timeout = 10)
+        return response.json()  # 실패해도 dict 반환
+    except Exception as e:
+        return {"cod": "500", "message": str(e)}
 
 # 4. IP 기반 대략적인 위치를 가져옴 => API 사용
 def get_location_by_ip() -> tuple[float | None,
