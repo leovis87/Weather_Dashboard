@@ -2,4 +2,9 @@ dotenv
 os
 requests
 streamlit
-openweathermap api
+
+API
+openweathermap
+ipinfo
+ip-api.com
+
