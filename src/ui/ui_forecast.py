@@ -10,7 +10,6 @@ def show_forecast(daily: pd.DataFrame):
     """
     # 제목/설명 텍스트 출력
     st.write("📊 5일치 예보 요약")
-
     # DataFrame을 표 형태로 보여줌
         # use_container_width=False:
         #   표의 가로 크기가 데이터프레임 자체 크기에 맞춤
@@ -20,7 +19,16 @@ def show_forecast(daily: pd.DataFrame):
 
     # date를 index로 설정 -> x축 날짜
     # 최저기온, 최고기온, 평균기온 -> y축
-    st.line_chart(daily[["최저기온", "최대기온", "평균기온"]])
+    tab1, tab2, tab3, tab4 = st.tabs(["🌡️ 기온", "💧 습도", "🌬️ 풍속", "☔ 강수/적설"])
+    with tab1:
+        st.line_chart(daily[["최저기온","최대기온","평균기온"]])
+    with tab2:
+        st.line_chart(daily[["최저습도","최대습도","평균습도"]])
+    with tab3:
+        st.line_chart(daily[["최저풍속","최대풍속","평균풍속"]])
+    with tab4:
+        st.line_chart(daily[["강수량","최대강수량","적설량","최대적설량"]])
+
 
 def show_current_weather(lat: float,
                          lon: float,
@@ -57,14 +65,17 @@ def show_current_details(data: dict,
     rain = data.get("rain", {})
     snow = data.get("snow", {})
 
-    cols = st.columns(4)
-    cols[0].metric("기온(°C)", f"{main.get('temp', '—')}")
-    cols[1].metric("체감온도(°C)", f"{main.get('feels_like', '—')}")
-    cols[2].metric("습도(%)", f"{main.get('humidity', '—')}")
-    cols[3].metric("바람(m/s)", f"{wind.get('speed', '—')}")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("🌡️ 온도", f"{main.get('temp', 'N/A')} °C")
+    with col2:
+        st.metric("💧 습도", f"{main.get('humidity', 'N/A')} %")
+    with col3:
+        st.metric("🌬️ 풍속", f"{wind.get('speed', 'N/A')} m/s")
 
-    # 선택적 강수/적설 표시
-    if "1h" in rain:
-        st.write(f"☔ 최근 1시간 강수량: {rain['1h']} mm")
-    if "1h" in snow:
-        st.write(f"❄️ 최근 1시간 적설량: {snow['1h']} mm")
+    # 강수량 표시
+    if rain:
+        st.info(f"☔ 최근 1시간 강수량: {rain.get('1h', 0)} mm / 최근 3시간: {rain.get('3h', 0)} mm")
+    if snow:
+        st.info(f"❄️ 최근 1시간 적설량: {snow.get('1h', 0)} mm / 최근 3시간: {snow.get('3h', 0)} mm")
+

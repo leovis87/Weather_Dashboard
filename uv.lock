@@ -2,6 +2,12 @@ version = 1
 revision = 3
 requires-python = ">=3.12"
 
+[manifest]
+members = [
+    "notebooks",
+    "wether-dashboard",
+]
+
 [[package]]
 name = "altair"
 version = "5.5.0"
@@ -286,6 +292,17 @@ sdist = { url = "https://files.pythonhosted.org/packages/b7/95/aa46616f5e567ff5d
 wheels = [
     { url = "https://files.pythonhosted.org/packages/13/34/00c7ae8194074ed82b64e0bb7c24220eac5f77ac90c16e23cf0d2cfd2a03/narwhals-2.9.0-py3-none-any.whl", hash = "sha256:c59f7de4763004ae81691ce16df71b4e55aead0ead7ccde8c8f2ef8c9559c765", size = 422255, upload-time = "2025-10-20T12:19:15.228Z" },
 ]
+
+[[package]]
+name = "notebooks"
+version = "0.1.0"
+source = { virtual = "notebooks" }
+dependencies = [
+    { name = "dotenv" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "dotenv", specifier = ">=0.9.9" }]
 
 [[package]]
 name = "numpy"
