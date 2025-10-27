@@ -23,6 +23,13 @@ def process_forecast(data: dict) -> pd.DataFrame:
         # 그 중, temp 값만 뽑아서 temp column으로 생성
     df["temp"] = df["main"].apply(lambda x: x["temp"])
 
+
+    # rain / snow column이 없는 경우 None 처리
+    if "rain" not in df.columns:
+        df["rain"] = None
+    if "snow" not in df.columns:
+        df["snow"] = None
+
     # rain column이 dict일 때만 "3h" 값을 꺼냄. 없으면 0
     df["rain_3h"] = df["rain"].apply(lambda x: x.get('3h', 0) if isinstance(x, dict) else 0)
 
