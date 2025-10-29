@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+import datetime
 
 # 3. 가져온 날씨 데이터 가공
 def process_forecast(data: dict) -> pd.DataFrame:
@@ -87,3 +88,31 @@ def process_forecast(data: dict) -> pd.DataFrame:
 
     return daily
 
+
+def check_rain_alert(daily: pd.DataFrame):
+    today = datetime.date.doday()
+    week_later = today + datetime.timedelta(days = 7)
+
+    # 7일 이내 & 강수량 > 0
+    rain_days = daily.loc[
+        (daily.index >= today) & (daily.index <= week_later) & (daily["강수량"] > 0)
+    ]
+
+    if not rain_days.empty:
+        st.warning(f'☔ 앞으로 7일 이내에 비오는 날이 있습니다!')
+    else:
+        st.info('☀️ 앞으로 7일이내에는 비 예보가 없습니다.')
+
+
+def check_snow_alert(daily: pd.DataFrame):
+    today = datetime.date.doday()
+    week_later = today + datetime.timedelta(days = 7)
+
+    snow_days = daily.loc[
+        (daily.index >= today) & (daily.index <= week_later) & (daily["적설량"] > 0)
+    ]
+
+    if not snow_days.empty:
+        st.warning(f'❄️ 앞으로 7일 이내에 눈오는 날이 있습니다!')
+    else:
+        st.info('☀️ 앞으로 7일이내에는 눈 예보가 없습니다.')

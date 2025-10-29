@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 from api.openweather import get_current_weather_by_coords
+from utils.util_forecast import check_rain_alert, check_snow_alert
 
 API_KEY = st.secrets["OPENWEATHER_API_KEY"]
 
@@ -8,6 +9,8 @@ def show_forecast(daily: pd.DataFrame):
     """
     Streamlit에서 예보 테이블과 그래프를 출력
     """
+    st.info("check_rain_alert(daily), check_snow_alert(daily)")
+
     # 제목/설명 텍스트 출력
     st.write("📊 5일치 예보 요약")
     # DataFrame을 표 형태로 보여줌

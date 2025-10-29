@@ -6,7 +6,10 @@ from api.openweather import get_forecast, \
                             get_current_weather_by_coords, \
                             get_location_by_ip
 from utils.util_forecast import process_forecast
-from ui.ui_forecast import show_forecast, show_current_details, show_current_weather
+from ui.ui_forecast import show_forecast, \
+                           show_current_details, \
+                           show_current_weather
+from fastapi import FastAPI
 
 # # .env 파일에서 환경 변수를 로드
 # load_dotenv()
@@ -14,7 +17,13 @@ from ui.ui_forecast import show_forecast, show_current_details, show_current_wea
 # # os.getenv() 함수로 환경 변수 값을 가져옴
 # API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
 
+app = FastAPI()
+
 API_KEY = st.secrets["OPENWEATHER_API_KEY"]
+
+@app.get('/')
+def main():
+    return ""
 
 def main():
     """
@@ -77,4 +86,8 @@ def main():
 
  
 if __name__ == "__main__":
-    main()
+    import uvicorn
+    uvicorn.run("leovis:app",
+                host="localhost",
+                port=8000,
+                reload=True)
