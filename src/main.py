@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import uvicorn
 import os
 # from dotenv import load_dotenv # local 환경에서 실행 시 사용.
 from api.openweather import get_forecast, \
@@ -84,9 +85,8 @@ def main():
                 f"{data.get('message', '알 수 없는 오류') if isinstance(data, dict) else 'API 응답 오류'}"
             )
 
- 
+
 if __name__ == "__main__":
-    import uvicorn
     uvicorn.run("leovis:app",
                 host="localhost",
                 port=8000,
