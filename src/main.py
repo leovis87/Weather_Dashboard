@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import uvicorn
+# import uvicorn
 import os
 # from dotenv import load_dotenv # local 환경에서 실행 시 사용.
 from api.openweather import get_forecast, \
@@ -86,8 +86,8 @@ def main():
             )
 
 
-if __name__ == "__main__":
-    uvicorn.run("leovis:app",
-                host="localhost",
-                port=8000,
-                reload=True)
+# if __name__ == "__main__":
+#     uvicorn.run("leovis:app",
+#                 host="localhost",
+#                 port=8000,
+#                 reload=True)
