@@ -10,7 +10,6 @@ from utils.util_forecast import process_forecast
 from ui.ui_forecast import show_forecast, \
                            show_current_details, \
                            show_current_weather
-from fastapi import FastAPI
 
 # # .env 파일에서 환경 변수를 로드
 # load_dotenv()
@@ -18,13 +17,7 @@ from fastapi import FastAPI
 # # os.getenv() 함수로 환경 변수 값을 가져옴
 # API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
 
-app = FastAPI()
-
 API_KEY = st.secrets["OPENWEATHER_API_KEY"]
-
-@app.get('/')
-def main():
-    return ""
 
 def main():
     """
@@ -85,6 +78,9 @@ def main():
                 f"{data.get('message', '알 수 없는 오류') if isinstance(data, dict) else 'API 응답 오류'}"
             )
 
+
+if __name__ == '__main__':
+    main()
 
 # if __name__ == "__main__":
 #     uvicorn.run("leovis:app",
