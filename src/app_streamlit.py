@@ -16,8 +16,7 @@ from ui.ui_forecast import show_forecast, \
 
 # # os.getenv() 함수로 환경 변수 값을 가져옴
 # API_KEY = os.getenv("OPENWEATHERMAP_API_KEY")
-
-API_KEY = st.secrets["OPENWEATHER_API_KEY"]
+API_KEY = st.secrets["OPENWEATHERMAP_API_KEY"]
 
 def main():
     """

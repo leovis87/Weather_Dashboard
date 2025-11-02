@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 import streamlit as st
 
-API_KEY = st.secrets["OPENWEATHER_API_KEY"]
+API_KEY = st.secrets["OPENWEATHERMAP_API_KEY"]
 
 """
 특정 도시의 현재 날씨 정보를 OpenWeatherMap API에서 가져옴.
