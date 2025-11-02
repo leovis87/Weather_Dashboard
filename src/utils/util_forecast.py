@@ -90,7 +90,7 @@ def process_forecast(data: dict) -> pd.DataFrame:
 
 
 def check_rain_alert(daily: pd.DataFrame):
-    today = datetime.date.doday()
+    today = datetime.date.today()
     week_later = today + datetime.timedelta(days = 7)
 
     # 7일 이내 & 강수량 > 0
@@ -105,7 +105,7 @@ def check_rain_alert(daily: pd.DataFrame):
 
 
 def check_snow_alert(daily: pd.DataFrame):
-    today = datetime.date.doday()
+    today = datetime.date.today()
     week_later = today + datetime.timedelta(days = 7)
 
     snow_days = daily.loc[
