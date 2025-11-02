@@ -24,6 +24,8 @@ def process_forecast(data: dict) -> pd.DataFrame:
         # 그 중, temp 값만 뽑아서 temp column으로 생성
     df["temp"] = df["main"].apply(lambda x: x["temp"])
 
+    df["feels_like"] = df["main"].apply(lambda x: x["feels_like"])
+
 
     # rain / snow column이 없는 경우 None 처리
     if "rain" not in df.columns:
@@ -52,6 +54,9 @@ def process_forecast(data: dict) -> pd.DataFrame:
           .agg(t_min=("temp", "min"),
                t_max=("temp", "max"),
                t_mean=("temp", "mean"),
+               flt_min=("feels_like", "min"),
+               flt_max=("feels_like", "max"),
+               flt_mean=("feels_like", "mean"),
                hu_min=("humidity", "min"),
                hu_max=("humidity", "max"),
                hu_mean=("humidity", "mean"),
@@ -72,6 +77,9 @@ def process_forecast(data: dict) -> pd.DataFrame:
         "t_min": "최저기온",
         "t_max": "최대기온",
         "t_mean": "평균기온",
+        "flt_min": "최저체감기온",
+        "flt_max": "최대체감기온",
+        "flt_mean": "평균체감기온",
         "hu_min": "최저습도",
         "hu_max": "최대습도",
         "hu_mean": "평균습도",
